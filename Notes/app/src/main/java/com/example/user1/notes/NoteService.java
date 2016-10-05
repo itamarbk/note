@@ -11,6 +11,10 @@ public interface NoteService {
      */
     public ArrayList<Note> fetchNotes();
     /*
+    deletes empty notes, to be applied at the begining of saveNotes
+     */
+    public void deleteEmptyNotes(ArrayList<Note> notes);
+    /*
     saves/updates the array in the storage
      */
     public void saveNotes(ArrayList<Note> notes);

@@ -38,13 +38,24 @@ public class InternalStorageService implements NoteService{
 
     @Override
     public void saveNotes(ArrayList<Note> notes) {
+        deleteEmptyNotes(notes);
         File file=new File(context.getFilesDir(),FILE_PATH);
         try {
             PrintWriter pr = new PrintWriter(file);
-            for(int i=0;i<notes.size();i++){
-                pr.println(notes.get(i)+SEPERATOR);
-            }
+            for(int i=0;i<notes.size();i++)
+                pr.println(notes.get(i).getContent()+SEPERATOR);
             pr.close();
         }catch(Exception e){}
+
+    }
+
+    @Override
+    public void deleteEmptyNotes(ArrayList<Note> notes) {
+        for(int i=0;i<notes.size();i++){
+            if(notes.get(i).getContent()==""){
+                notes.remove(i);
+                i--;
+            }
+        }
     }
 }
