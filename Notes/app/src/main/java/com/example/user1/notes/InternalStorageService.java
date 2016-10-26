@@ -12,7 +12,7 @@ import java.util.Scanner;
  */
 public class InternalStorageService implements NoteService{
     final String FILE_PATH="note.txt";
-    final String SEPERATOR="//////ahhhhhh/////seperate!!!###@!@@?";
+    final String SEPERATOR="seperate!!!###@!@@";
     Context context;
 
     public InternalStorageService(Context context) {
@@ -42,8 +42,9 @@ public class InternalStorageService implements NoteService{
         File file=new File(context.getFilesDir(),FILE_PATH);
         try {
             PrintWriter pr = new PrintWriter(file);
-            for(int i=0;i<notes.size();i++)
-                pr.println(notes.get(i).getContent()+SEPERATOR);
+            for(int i=0;i<notes.size();i++) {
+                pr.println(notes.get(i).getContent() + SEPERATOR);
+            }
             pr.close();
         }catch(Exception e){}
 

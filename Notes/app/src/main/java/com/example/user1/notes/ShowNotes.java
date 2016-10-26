@@ -17,18 +17,26 @@ public class ShowNotes extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_notes);
         final InternalStorageService Noteservice =new InternalStorageService(this);
-        final ArrayList<Note> notes=new ArrayList<Note>();
+        final ArrayList<Note> notes=Noteservice.fetchNotes();
         final ArrayAdapter adapter=new ArrayAdapter(this,android.R.layout.simple_list_item_1,notes);
         final GridView gr=(GridView)findViewById(R.id.gridView);
         gr.setAdapter(adapter);
         Button btn=(Button)findViewById(R.id.btn);
+        Button clearbtn=(Button) findViewById(R.id.clearbtn);
+        clearbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                notes.clear();
+                Noteservice.saveNotes(notes);
+            }
+        });
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Note temp=new Note("");
                 temp.editNote(ShowNotes.this);
                 notes.add(temp);
-                Noteservice.saveNotes(notes);
+                //Noteservice.saveNotes(notes);
                // Noteservice.deleteEmptyNotes(notes);
             }
         });
@@ -39,7 +47,7 @@ public class ShowNotes extends AppCompatActivity {
 
                 notes.get(position).editNote(ShowNotes.this);
                 Noteservice.saveNotes(notes);
-               // Noteservice.deleteEmptyNotes(notes);
+                Noteservice.deleteEmptyNotes(notes);
             }
         });
 
