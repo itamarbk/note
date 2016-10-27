@@ -8,12 +8,19 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 
+import com.parse.Parse;
+
 import java.util.ArrayList;
 
 public class ShowNotes extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Parse.initialize(new Parse.Configuration.Builder(this)
+                .applicationId("jPFcw09FZEhu6fF5ijs5V14TZFrHAP9B25JjDXKY")
+                .clientKey("DZYzyWXpYlpBaRBSxM7qOtwBGWOFO7ftNdwV9Gw1")
+                .server("https://parseapi.back4app.com/").build()
+        );
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_notes);
         final InternalStorageService Noteservice =new InternalStorageService(this);
@@ -36,7 +43,9 @@ public class ShowNotes extends AppCompatActivity {
                 Note temp=new Note("");
                 temp.editNote(ShowNotes.this);
                 notes.add(temp);
-                //Noteservice.saveNotes(notes);
+                adapter.notifyDataSetChanged();
+                gr.setAdapter(adapter);
+                Noteservice.saveNotes(notes);
                // Noteservice.deleteEmptyNotes(notes);
             }
         });
