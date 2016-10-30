@@ -14,7 +14,7 @@ public class CloudService implements NoteService {
     public ArrayList<Note> fetchNotes() {
         ParseObject NotesTable=new ParseObject("Notes");
         ArrayList<Note> notes=new ArrayList<Note>();
-        for(NotesTable.)
+        //for(NotesTable.)
         return null;
     }
 

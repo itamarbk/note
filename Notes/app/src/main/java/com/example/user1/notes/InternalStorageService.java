@@ -33,7 +33,7 @@ public class InternalStorageService implements NoteService{
             return notes;
         }
         catch(Exception e){}
-        return null;
+        return notes;
     }
 
     @Override
