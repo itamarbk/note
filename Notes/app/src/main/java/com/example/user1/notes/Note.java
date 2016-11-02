@@ -8,11 +8,14 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 /**
  * Created by USER1 on 21/09/2016.
  */
 public class Note {
     String content;
+    boolean save;
 
     public Note(String content) {
         this.content = content;
@@ -30,6 +33,7 @@ public class Note {
     public void editNote(Context context) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
         alertDialog.setTitle("Edit Note");
+        save=true;
 
         final EditText input = new EditText(context);
         if(content!="")
@@ -51,9 +55,12 @@ public class Note {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         content="";
+                        save=false;
                     }
                 });
 
         alertDialog.show();
+        if(save)
+            content=input.getText().toString();
     }
 }

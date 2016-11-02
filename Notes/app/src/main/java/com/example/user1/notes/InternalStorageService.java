@@ -43,7 +43,8 @@ public class InternalStorageService implements NoteService{
         try {
             PrintWriter pr = new PrintWriter(file);
             for(int i=0;i<notes.size();i++) {
-                pr.println(notes.get(i).getContent() + SEPERATOR);
+              //  if(notes.get(i).getContent()!="")
+                    pr.println(notes.get(i).getContent() + SEPERATOR);
             }
             pr.close();
         }catch(Exception e){}
@@ -53,7 +54,7 @@ public class InternalStorageService implements NoteService{
     @Override
     public void deleteEmptyNotes(ArrayList<Note> notes) {
         for(int i=0;i<notes.size();i++){
-            if(notes.get(i).getContent()==""){
+            if(notes.get(i).getContent()==""||notes.get(i).getContent()=="\n"){
                 notes.remove(i);
                 i--;
             }
