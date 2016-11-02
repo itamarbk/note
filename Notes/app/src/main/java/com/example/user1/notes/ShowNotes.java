@@ -23,7 +23,7 @@ public class ShowNotes extends AppCompatActivity {
         );
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_notes);
-        final InternalStorageService Noteservice =new InternalStorageService(this);
+        final CloudService Noteservice =new CloudService();
         final ArrayList<Note> notes=Noteservice.fetchNotes();
         final ArrayAdapter adapter=new ArrayAdapter(this,android.R.layout.simple_list_item_1,notes);
         final GridView gr=(GridView)findViewById(R.id.gridView);

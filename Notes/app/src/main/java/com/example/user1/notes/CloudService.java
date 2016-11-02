@@ -15,6 +15,9 @@ import java.util.List;
  */
 public class CloudService implements NoteService {
 
+    public CloudService() {
+    }
+
     @Override
     public ArrayList<Note> fetchNotes() {
         final ArrayList<Note> notes=new ArrayList<Note>();
@@ -22,9 +25,13 @@ public class CloudService implements NoteService {
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, com.parse.ParseException e) {
-                for(int i = 0; i < objects.size(); i++) {
-                    notes.add(new Note((String)objects.get(i).get("content")));
+                if(objects!=null) {
+                    for (int i = 0; i < objects.size(); i++) {
+                        notes.add(new Note((String) objects.get(i).get("content")));
+                    }
                 }
+                Log.d("objects","objects==null"+(objects==null));
+                Log.d("parse exception","exception==null"+(e==null));
             }
         });
         return notes;
@@ -38,6 +45,7 @@ public class CloudService implements NoteService {
             ParseObject NotesTable = new ParseObject("Notes");
             NotesTable.put("content", notes.get(i).content);
             NotesTable.saveInBackground();
+            Log.d("saving notes to cloud","saving notes to cloud");
         }
     }
 

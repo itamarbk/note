@@ -38,7 +38,7 @@ public class InternalStorageService implements NoteService{
 
     @Override
     public void saveNotes(ArrayList<Note> notes) {
-        deleteEmptyNotes(notes);
+        //deleteEmptyNotes(notes);
         File file=new File(context.getFilesDir(),FILE_PATH);
         try {
             PrintWriter pr = new PrintWriter(file);
