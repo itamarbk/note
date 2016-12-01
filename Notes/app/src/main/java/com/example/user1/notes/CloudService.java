@@ -15,11 +15,9 @@ import java.util.List;
  * Created by USER1 on 27/10/2016.
  */
 public class CloudService implements NoteService {
-    ArrayList<Note> savedNotes;
 
     public CloudService() {
         ParseObject NotesTable = new ParseObject("Notes");
-        savedNotes=this.fetchNotes();
     }
 
     @Override
@@ -44,18 +42,31 @@ public class CloudService implements NoteService {
 
     @Override
     public void saveNotes(ArrayList<Note> notes) {
-        notes=newNotes(notes);
-        deleteEmptyNotes(notes);
-        deleteEmptyNotes(savedNotes);
         ParseObject NotesTable = new ParseObject("Notes");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Notes");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, com.parse.ParseException e) {
+                if (e == null) {
+                    if (objects != null) {
+                        for (int i = 0; i < objects.size(); i++) {
+                            objects.get(i).deleteInBackground();
+                        }
+                    }
+                    Log.d("objects", "objects==null" + (objects == null));
+                    Log.d("parse exception", "exception==null" + (e == null));
+                }
+            }
+        });
         for (int i = 0; i < notes.size(); i++) {
             NotesTable.put("content", notes.get(i).content);
         }
         NotesTable.saveInBackground();
         Log.d("saving notes to cloud", "done?");
     }
-    private ArrayList<Note> newNotes(ArrayList<Note> notes){
-        ArrayList<Note> temp=notes;
+   /* private void clearParseNotes(){
+
+        ParseObject NotesTable = new ParseObject("Notes");
         for(int i=0;i<notes.size();i++){
             for(int j=0;j<temp.size();j++){
                 if(notes.get(i)==savedNotes.get(j)){
@@ -65,7 +76,7 @@ public class CloudService implements NoteService {
         }
         savedNotes.addAll(temp);
         return temp;
-    }
+    }*/
 
     @Override
     public void deleteEmptyNotes(ArrayList<Note> notes) {
